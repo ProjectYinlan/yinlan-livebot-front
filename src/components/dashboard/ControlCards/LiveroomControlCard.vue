@@ -13,8 +13,14 @@
               name="洇岚窝"
               number="259565487"
               avatar="/assets/imgs/yinlanwo.jpg"
-              count="3"
-            />
+            >
+              <el-button
+                type="primary"
+                circle
+                class="dash-control-card-contact-item-btn"
+                >3</el-button
+              >
+            </ContactItem>
           </el-scrollbar>
         </el-tab-pane>
 
@@ -25,7 +31,14 @@
               number="uid: 12583120"
               avatar="assets/imgs/colour93.jpg"
               count="1"
-            />
+            >
+              <el-button
+                type="primary"
+                circle
+                class="dash-control-card-contact-item-btn"
+                >1</el-button
+              >
+            </ContactItem>
           </el-scrollbar>
         </el-tab-pane>
       </el-tabs>

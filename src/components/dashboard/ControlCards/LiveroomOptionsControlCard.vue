@@ -1,0 +1,63 @@
+<template>
+  <div class="dash-control-card" size="sm">
+    <div class="dash-control-card-title">
+      <el-icon class="dash-control-card-title-icon"><Setting /></el-icon>
+      <div class="dash-control-card-title-content">直播检测选项</div>
+    </div>
+
+    <div class="dash-control-card-content">
+      <div class="row-center">
+        <div class="row-center-title">工作模式</div>
+        <span>不登陆账号</span>
+        <el-switch
+          v-model="mode"
+          class="ml-2"
+          style="
+            --el-switch-on-color: var(--color-bilibot-auth);
+            --el-switch-off-color: var(--color-bilibot-unauth);
+          "
+        />
+        <span>登陆账号</span>
+      </div>
+
+      <div class="row-center">
+        <div class="row-center-title">检测间隔</div>
+        <el-input-number
+          v-model="interval"
+          :min="mode ? 10 : 60"
+          :max="90"
+          size="small"
+        />
+        秒
+      </div>
+
+      <div class="dash-control-card-apply-btn-group">
+        <el-button
+          id="dash-control-card-liveroom-options-log-btn"
+          type="primary"
+          plain
+          :disabled="!mode"
+          >登入 / 登出</el-button
+        >
+
+        <el-button type="primary">应用</el-button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const props = defineProps({
+  mode: {
+    type: Boolean,
+    default: true,
+  },
+  interval: {
+    type: Number,
+    default: 60,
+  },
+});
+</script>
+
+<style scoped>
+</style>

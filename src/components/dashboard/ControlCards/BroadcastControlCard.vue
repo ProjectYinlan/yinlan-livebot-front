@@ -7,7 +7,7 @@
 
     <div class="dash-control-card-content">
       <el-radio-group
-        :v-model="radio"
+        v-model="radio"
         class="dash-control-card-broadcast-content-item"
       >
         <el-radio-button label="群聊" />
@@ -15,7 +15,7 @@
       </el-radio-group>
       <el-input
         class="dash-control-card-broadcast-content-item"
-        v-model="radio"
+        v-model="input"
         :autosize="{ minRows: 4, maxRows: 4 }"
         type="textarea"
         placeholder="在这里输入需要广播的内容嗷"
@@ -32,13 +32,16 @@
 </template>
 
 <script setup>
-// defineProps({
-//   radio: {
-//     type: String,
-//   },
-// });
-import { ref } from "vue";
-const radio = ref("群聊");
+defineProps({
+  radio: {
+    type: String,
+    default: "群聊"
+  },
+  input: {
+    type: String,
+    default: ""
+  }
+});
 </script>
 
 <style scoped>

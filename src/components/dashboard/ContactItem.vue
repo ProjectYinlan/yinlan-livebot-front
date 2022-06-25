@@ -10,12 +10,7 @@
       <div class="dash-control-card-contact-item-content-number">{{ number }}</div>
     </div>
     <div class="dash-control-card-contact-item-btn-group">
-      <el-button
-        type="primary"
-        circle
-        class="dash-control-card-contact-item-btn"
-        >{{ count }}</el-button
-      >
+      <slot />
     </div>
   </div>
 </template>
