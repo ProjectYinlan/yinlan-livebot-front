@@ -1,0 +1,171 @@
+.content {
+  @apply relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12;
+}
+
+.bg {
+  @apply fixed top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2;
+}
+
+.box {
+  @apply relative z-50 mx-auto h-full p-5;
+  width: 85%;
+  max-width: 500px;
+  transition: width 1s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+    height 1s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.box-avatar {
+  @apply relative z-40 w-24;
+  margin: 0 auto;
+}
+
+.box-avatar img {
+  @apply rounded-full shadow-lg;
+}
+
+.box-content {
+  @apply relative flex h-full flex-col rounded-xl bg-white p-4 pt-12 shadow-lg;
+  min-height: 18rem;
+  top: -2.5rem;
+}
+
+.box-title {
+  @apply relative text-center;
+}
+
+.box-intro {
+  @apply flex flex-col justify-center text-center font-medium;
+  align-items: center;
+  font-size: 26px;
+}
+
+.box-container,
+.box-intro {
+  min-height: 400px;
+}
+
+@media (min-width: 640px) {
+  .box-container,
+  .box-intro {
+    min-height: 250px;
+  }
+}
+
+.box-container {
+  @apply flex flex-col;
+  align-items: center;
+}
+
+.box-title {
+  @apply font-semibold;
+  font-size: 22px;
+}
+
+.input-group {
+  @apply flex flex-col;
+}
+
+.input-group label {
+  font-size: large;
+}
+
+.input-group input {
+  @apply rounded-md p-1 shadow-sm;
+  border: 1px solid #d9d9d9;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input-group input:hover {
+  border: 1px solid #38bdf8;
+}
+
+.input-group input:focus {
+  @apply outline-none;
+  border: 1px solid #38bdf8;
+  box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
+}
+
+.input-toggle-group {
+  @apply flex h-full;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-toggle-group label {
+  @apply relative;
+  /* left: 4em; */
+  font-size: 20px;
+}
+
+.input-toggle-parent {
+  @apply my-0.5;
+}
+
+.input-toggle,
+.input-toggle-parent {
+  width: 4em;
+  height: 2em;
+}
+
+.input-toggle {
+  @apply absolute cursor-pointer;
+  margin: 0;
+  filter: opacity(0);
+  z-index: 2;
+}
+
+.input-toggle ~ .input-toggle-switch {
+  @apply flex absolute justify-center;
+  align-items: center;
+}
+
+.input-toggle ~ .input-toggle-switch .input-toggle-inner {
+  @apply flex justify-center;
+  width: 4em;
+  height: 2em;
+  border-radius: 2em;
+  background: #e5e7eb;
+}
+
+.input-toggle ~ .input-toggle-switch .input-toggle-inner .input-toggle-disc {
+  @apply relative flex justify-center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+  left: -30%;
+  background: #fff;
+  border-radius: 50%;
+	box-shadow: 0 0.2em 0.3em rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+}
+
+.input-toggle:checked ~ .input-toggle-switch .input-toggle-inner {
+  background: #38bdf8;
+}
+
+.input-toggle:checked ~ .input-toggle-switch .input-toggle-inner .input-toggle-disc {
+  left: 30%;
+}
+
+/* 所有 input 控件的大小及间距 */
+.input-group,
+.input-toggle-group {
+  @apply w-5/6 m-1;
+}
+
+
+.next-btn {
+  @apply h-12 w-12 rounded-full bg-sky-400 shadow-lg hover:bg-sky-500;
+  margin: 0px auto;
+  margin-top: 1.5rem;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 1s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.footer {
+  @apply absolute bottom-10 w-full text-center text-gray-400;
+}
