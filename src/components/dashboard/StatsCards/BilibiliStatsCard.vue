@@ -1,6 +1,6 @@
 <template>
   <StatsCard type="bilibili" title="B站账号信息">
-    <StatsCardContent name="工作模式" :value="mode">
+    <StatsCardContent name="工作模式" :value="modeText">
       <el-icon><Monitor /></el-icon>
     </StatsCardContent>
 
@@ -17,7 +17,23 @@
 <script setup>
 import StatsCard from "../StatsCard.vue";
 import StatsCardContent from "../StatsCardContent.vue";
-defineProps(["mode", "accountName", "followUserCount"]);
+// const props = defineProps(["mode", "accountName", "followUserCount"]);
+const props = defineProps(["data"]);
+let { mode, accountName, followUserCount } = props.data;
+let modeText = "未知";
+switch (mode) {
+
+  case 'auth':
+    modeText = "登陆账号";
+    break;
+
+  case 'anonymous':
+    modeText = "匿名";
+    break;
+
+  default:
+    break;
+}
 </script>
 
 <style scoped>

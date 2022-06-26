@@ -5,32 +5,36 @@
   <div class="dash-content">
     <div class="dash-content-col">
 
-      <OverviewStatsCard groupCount="1" followCount="1" pushCount="1" />
+      <!-- <OverviewStatsCard :groupCount="1" followCount="1" pushCount="1" /> -->
+      <OverviewStatsCard :data="data.stats.overview" />
 
-      <AuditControlCard />
+      <AuditControlCard :auditList="data.cards.auditList" />
     
     </div>
 
     <div class="dash-content-col">
      
-      <BilibiliStatsCard mode="登陆账号" accountName="路过的玖叁" followUserCount="1" />
+      <!-- <BilibiliStatsCard mode="auth" accountName="路过的玖叁" followUserCount="1" /> -->
+      <BilibiliStatsCard :data="data.stats.bilibili" />
 
-      <LiveroomControlCard />
+      <LiveroomControlCard :liveroomList="data.cards.liveroomList" />
       
     </div>
 
     <div class="dash-content-col">
 
-      <YinlanStatsCard version="0.1.0" updateDate="2022.8.1" runningTime="1:01:01" />
+      <!-- <YinlanStatsCard version="0.1.0" updateDate="2022.8.1" :runningTime="yinlanRunningTime" /> -->
+      <YinlanStatsCard :data="data.stats.yinlan" />
 
       <BroadcastControlCard :radio="broadcastRadio" :input="broadcastInput" />
 
-      <LiveroomOptionsControlCard :mode="bilibotMode" :interval="bilibotInterval" />
+      <!-- <LiveroomOptionsControlCard :auth="bilibotAuth" :interval="bilibotInterval" :accountStatus="bilibotAccountStatus" /> -->
+      <LiveroomOptionsControlCard :auth="bilibotAuth" :interval="bilibotInterval" :accountStatus="bilibotAccountStatus" />
 
     </div>
 
     <div class="dash-content-col">
-      <ContactListControlCard />
+      <ContactListControlCard :contactList="data.cards.contactList" />
     </div>
   </div>
 </template>
@@ -49,12 +53,24 @@ import LiveroomOptionsControlCard from "../components/dashboard/ControlCards/Liv
 import ContactListControlCard from "../components/dashboard/ControlCards/ContactListControlCard.vue";
 
 import { ref } from "vue";
+import { data } from "../../mock/dash.json";
 
-const broadcastRadio = ref("群聊");
-const broadcastInput = ref("");
+console.log(data);
 
-const bilibotMode = ref(true);
-const bilibotInterval = ref(60);
+let yinlanRunningTime = ref(0);
+// setInterval(()=>{
+//   yinlanRunningTime.value ++;
+// }, 1000)
+
+let broadcastRadio = ref("群聊");
+let broadcastInput = ref("");
+
+let bilibotAuth = ref(data.cards.liveroomOptions.mode == 'auth' ? true : false);
+let bilibotInterval = ref(data.cards.liveroomOptions.interval);
+let bilibotAccountStatus = ref(data.cards.liveroomOptions.mode == 'authed' ? true : false);
+
+
+
 
 </script>
 

@@ -1,0 +1,82 @@
+{
+    "code": 200,
+    "msg": null,
+    "data": {
+        "stats": {
+            "overview": {
+                "groupCount": 1,
+                "followCount": 1,
+                "pushCount": 1
+            },
+            "bilibili": {
+                "mode": "auth",
+                "accountName": "路过的玖叁",
+                "followUserCount": 1
+            },
+            "yinlan": {
+                "version": "0.1.0",
+                "updateDate": "2022.8.1",
+                "runningTime": 3600
+            }
+        },
+        "cards": {
+            "auditList": [
+                {
+                    "eid": 2323,
+                    "type": "friend",
+                    "name": "洇岚",
+                    "id": 2811520355,
+                    "desc": "uwu",
+                    "avatar": "/assets/imgs/yinlan.jpg"
+                  },
+                  {
+                    "eid": 2324,
+                    "type": "group",
+                    "name": "福瑞之家",
+                    "id": 275720357,
+                    "desc": "uwu",
+                    "avatar": "/assets/imgs/furryhome.jpg"
+                  }
+            ],
+            "liveroomList": {
+                "groupView": [
+                    {
+                      "name": "洇岚窝",
+                      "id": 259565487,
+                      "avatar": "/assets/imgs/yinlanwo.jpg",
+                      "count": 3
+                    }
+                  ],
+                  "liveroomView": [
+                    {
+                      "name": "路过的玖叁",
+                      "id": 12583120,
+                      "avatar": "/assets/imgs/colour93.jpg",
+                      "count": 1
+                    }
+                  ]
+            },
+            "liveroomOptions": {
+                "mode": "auth",
+                "accountStatus": "authed",
+                "interval": 10
+            },
+            "contactList": {
+              "group": [
+                {
+                  "id": 259565487,
+                  "name": "洇岚窝",
+                  "avatar": "/assets/imgs/yinlanwo.jpg"
+                }
+              ],
+              "friend": [
+                {
+                  "id": 1285419578,
+                  "name": "玖叁",
+                  "avatar": "/assets/imgs/colour93.jpg"
+                }
+              ]
+            }
+        }
+    }
+}

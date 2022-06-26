@@ -6,39 +6,42 @@
     </div>
 
     <div class="dash-control-card-content">
-      <el-tabs stretch="true">
+      <el-tabs :stretch="true">
         <el-tab-pane label="群视图">
           <el-scrollbar>
-            <ContactItem
-              name="洇岚窝"
-              number="259565487"
-              avatar="/assets/imgs/yinlanwo.jpg"
-            >
-              <el-button
-                type="primary"
-                circle
-                class="dash-control-card-contact-item-btn"
-                >3</el-button
+            <div v-for="groupItem in liveroomList.groupView" :key="groupItem.id">
+              <ContactItem
+                :name="groupItem.name"
+                :number="groupItem.id"
+                :avatar="groupItem.avatar"
               >
-            </ContactItem>
+                <el-button
+                  type="primary"
+                  circle
+                  class="dash-control-card-contact-item-btn"
+                  >{{ groupItem.count }}</el-button
+                >
+              </ContactItem>
+            </div>
           </el-scrollbar>
         </el-tab-pane>
 
-        <el-tab-pane label="直播间视图">
+        <el-tab-pane label="直播间视图 (uid)">
           <el-scrollbar>
-            <ContactItem
-              name="路过的玖叁"
-              number="uid: 12583120"
-              avatar="assets/imgs/colour93.jpg"
-              count="1"
-            >
-              <el-button
-                type="primary"
-                circle
-                class="dash-control-card-contact-item-btn"
-                >1</el-button
+            <div v-for="liveroomItem in liveroomList.liveroomView" :key="liveroomItem.id">
+              <ContactItem
+                :name="liveroomItem.name"
+                :number="liveroomItem.id"
+                :avatar="liveroomItem.avatar"
               >
-            </ContactItem>
+                <el-button
+                  type="primary"
+                  circle
+                  class="dash-control-card-contact-item-btn"
+                  >{{ liveroomItem.count }}</el-button
+                >
+              </ContactItem>
+            </div>
           </el-scrollbar>
         </el-tab-pane>
       </el-tabs>
@@ -48,6 +51,7 @@
 
 <script setup>
 import ContactItem from "../ContactItem.vue";
+defineProps(["liveroomList"]);
 </script>
 
 <style scoped>

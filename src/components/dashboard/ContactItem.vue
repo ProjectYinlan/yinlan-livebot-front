@@ -22,8 +22,8 @@ const props = defineProps({
     type: String,
   },
   number: {
-    default: "NUMBER",
-    type: String,
+    default: 123456,
+    type: Number,
   },
   count: {
     default: "0",

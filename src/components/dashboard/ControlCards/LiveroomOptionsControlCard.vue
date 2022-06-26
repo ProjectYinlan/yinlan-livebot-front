@@ -10,7 +10,7 @@
         <div class="row-center-title">工作模式</div>
         <span>不登陆账号</span>
         <el-switch
-          v-model="mode"
+          v-model="auth"
           class="ml-2"
           style="
             --el-switch-on-color: var(--color-bilibot-auth);
@@ -24,7 +24,7 @@
         <div class="row-center-title">检测间隔</div>
         <el-input-number
           v-model="interval"
-          :min="mode ? 10 : 60"
+          :min="auth ? 10 : 60"
           :max="90"
           size="small"
         />
@@ -36,8 +36,8 @@
           id="dash-control-card-liveroom-options-log-btn"
           type="primary"
           plain
-          :disabled="!mode"
-          >登入 / 登出</el-button
+          :disabled="!auth"
+          >{{ accountStatus ? "登出" : "登入" }}</el-button
         >
 
         <el-button type="primary">应用</el-button>
@@ -48,15 +48,20 @@
 
 <script setup>
 const props = defineProps({
-  mode: {
+  auth: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   interval: {
     type: Number,
     default: 60,
   },
+  accountStatus: {
+    type: Boolean,
+    default: false
+  }
 });
+
 </script>
 
 <style scoped>

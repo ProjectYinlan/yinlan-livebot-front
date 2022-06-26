@@ -6,13 +6,14 @@
     </div>
 
     <div class="dash-control-card-content">
-      <el-tabs stretch="true">
+      <el-tabs :stretch="true">
         <el-tab-pane label="群聊">
           <el-scrollbar>
+            <div v-for="groupItem in contactList.group" :key="groupItem.id">
             <ContactItem
-              name="洇岚窝"
-              number="259565487"
-              avatar="/assets/imgs/yinlanwo.jpg"
+              :name="groupItem.name"
+              :number="groupItem.id"
+              :avatar="groupItem.avatar"
             >
               <el-button type="primary" circle
                 ><el-icon><Document /></el-icon
@@ -21,14 +22,17 @@
                 ><el-icon><Delete /></el-icon
               ></el-button>
             </ContactItem>
+
+            </div>
           </el-scrollbar>
         </el-tab-pane>
 
         <el-tab-pane label="好友">
-          <ContactItem
-              name="玖叁"
-              number="1285419578"
-              avatar="/assets/imgs/colour93.jpg"
+          <div v-for="friendItem in contactList.friend" :key="friendItem.id">
+            <ContactItem
+              :name="friendItem.name"
+              :number="friendItem.id"
+              :avatar="friendItem.avatar"
             >
               <el-button type="primary" circle
                 ><el-icon><Document /></el-icon
@@ -37,6 +41,8 @@
                 ><el-icon><Delete /></el-icon
               ></el-button>
             </ContactItem>
+
+            </div>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -45,6 +51,7 @@
 
 <script setup>
 import ContactItem from "../ContactItem.vue";
+defineProps(["contactList"]);
 </script>
 
 <style scoped>
