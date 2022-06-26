@@ -1,7 +1,7 @@
 <template>
   <div class="dash-control-card-contact-item">
     <img
-      :src="avatar"
+      :src="avatarUrl"
       alt=""
       class="dash-control-card-contact-item-avatar"
     />
@@ -16,7 +16,12 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
+  type: {
+    default: "friend",
+    type: String
+  },
   name: {
     default: "NAME",
     type: String,
@@ -24,16 +29,28 @@ const props = defineProps({
   number: {
     default: 123456,
     type: Number,
-  },
-  count: {
-    default: "0",
-    type: String,
-  },
-  avatar: {
-    default: "/assets/imgs/yinlan.jpg",
-    type: String,
   }
 });
+
+let avatarUrl = '/assets/imgs/yinlan.jpg';
+switch (props.type) {
+
+    case "friend":
+        avatarUrl = `http://q2.qlogo.cn/headimg_dl?dst_uin=${props.number}&spec=640`
+        break;
+
+    case "group":
+        avatarUrl = `http://p.qlogo.cn/gh/${props.number}/${props.number}/640/`
+        break;
+
+    case "bilibili":
+        avatarUrl = `http://p.qlogo.cn/gh/${props.number}/${props.number}/640/`
+        break;
+
+    default:
+        break;
+}
+
 </script>
 
 <style scoped>

@@ -14,7 +14,7 @@
 
       <div class="right">
         <img
-          :src="avatar"
+          :src="avatarUrl"
           alt=""
           class="dash-control-card-audit-card-avatar"
         />
@@ -23,12 +23,31 @@
 
     <div class="bottom">
       <div class="left">
-        <el-button type="info" plain>查看详情</el-button>
+        <el-tooltip content="查看详情" placement="bottom">
+          <el-button type="info" plain circle
+            ><el-icon><Document /></el-icon
+          ></el-button>
+        </el-tooltip>
       </div>
 
       <div class="right">
-        <el-button type="success">同意</el-button>
-        <el-button type="danger">拒绝</el-button>
+        <el-tooltip content="同意" placement="bottom">
+          <el-button type="success" circle
+            ><el-icon><Check /></el-icon
+          ></el-button>
+        </el-tooltip>
+
+        <el-tooltip content="拒绝" placement="bottom">
+          <el-button type="danger" circle
+            ><el-icon><Close /></el-icon
+          ></el-button>
+        </el-tooltip>
+
+        <el-tooltip content="忽略" placement="bottom">
+          <el-button type="info" circle
+            ><el-icon><Minus /></el-icon
+          ></el-button>
+        </el-tooltip>
       </div>
     </div>
   </div>
@@ -36,40 +55,37 @@
 
 <script setup>
 const props = defineProps({
+  type: String,
+  name: {
+    default: "NAME",
     type: String,
-    name: {
-        default: "NAME",
-        type: String
-    },
-    number: {
-        default: 123456,
-        type: Number
-    },
-    desc: {
-        default: "DESC",
-        type: String
-    },
-    avatar: {
-        default: "/assets/imgs/yinlan.jpg",
-        type: String
-    }
+  },
+  number: {
+    default: 123456,
+    type: Number,
+  },
+  desc: {
+    default: "DESC",
+    type: String,
+  },
 });
 
 let typeName = "TYPE_NAME";
+let avatarUrl = "/assets/imgs/yinlan.jpg";
 switch (props.type) {
+  case "friend":
+    typeName = "好友申请";
+    avatarUrl = `http://q2.qlogo.cn/headimg_dl?dst_uin=${props.number}&spec=640`;
+    break;
 
-    case "friend":
-        typeName = "好友申请";
-        break;
+  case "group":
+    typeName = "邀群申请";
+    avatarUrl = `http://p.qlogo.cn/gh/${props.number}/${props.number}/640/`;
+    break;
 
-    case "group":
-        typeName = "邀群申请";
-        break;
-
-    default:
-        break;
+  default:
+    break;
 }
-
 </script>
 
 <style scoped>

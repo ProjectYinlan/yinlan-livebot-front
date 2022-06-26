@@ -24,16 +24,18 @@
                 {
                     "eid": 2323,
                     "type": "friend",
-                    "name": "玖叁",
-                    "id": 1285419578,
-                    "desc": "v窝50"
+                    "name": "洇岚",
+                    "id": 2811520355,
+                    "desc": "uwu",
+                    "avatar": "/assets/imgs/yinlan.jpg"
                   },
                   {
                     "eid": 2324,
                     "type": "group",
                     "name": "洇岚的交流群",
                     "id": 365767975,
-                    "desc": "来自 洇岚-1 (2811520355) 邀请"
+                    "desc": "来自 洇岚-1 (2811520355) 邀请",
+                    "avatar": "/assets/imgs/furryhome.jpg"
                   }
             ],
             "liveroomList": {
@@ -63,13 +65,15 @@
               "group": [
                 {
                   "id": 259565487,
-                  "name": "洇岚窝"
+                  "name": "洇岚窝",
+                  "avatar": "/assets/imgs/yinlanwo.jpg"
                 }
               ],
               "friend": [
                 {
                   "id": 1285419578,
-                  "name": "玖叁"
+                  "name": "玖叁",
+                  "avatar": "/assets/imgs/colour93.jpg"
                 }
               ]
             }

@@ -3,6 +3,10 @@
   padding: 0 !important;
 }
 
+button.is-circle.el-button {
+  width: 32px;
+}
+
 :root {
   --color-friend: #1d4ed8;
   --color-group: #047857;
@@ -207,6 +211,10 @@
 .dash-control-card-audit-card-title {
   @apply mb-2;
   font-size: 16px;
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dash-control-card-audit-card-title[type="friend"] {
@@ -233,6 +241,10 @@
 .dash-control-card-audit-card-desc {
   @apply text-gray-500 py-1 mb-2;
   font-size: 14px;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dash-control-card-audit-card-avatar {
@@ -265,10 +277,6 @@
 
 .dash-control-card-contact-item-content-number {
   font-size: 16px;
-}
-
-.dash-control-card-contact-item-btn-group button {
-  width: 32px;
 }
 
 /* 广播卡片 */

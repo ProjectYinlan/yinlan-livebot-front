@@ -13,7 +13,7 @@
             <ContactItem
               :name="groupItem.name"
               :number="groupItem.id"
-              :avatar="groupItem.avatar"
+              type="group"
             >
               <el-button type="primary" circle
                 ><el-icon><Document /></el-icon
@@ -32,7 +32,7 @@
             <ContactItem
               :name="friendItem.name"
               :number="friendItem.id"
-              :avatar="friendItem.avatar"
+              type="friend"
             >
               <el-button type="primary" circle
                 ><el-icon><Document /></el-icon

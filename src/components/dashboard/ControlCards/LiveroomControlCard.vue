@@ -13,7 +13,7 @@
               <ContactItem
                 :name="groupItem.name"
                 :number="groupItem.id"
-                :avatar="groupItem.avatar"
+                type="group"
               >
                 <el-button
                   type="primary"
@@ -32,7 +32,7 @@
               <ContactItem
                 :name="liveroomItem.name"
                 :number="liveroomItem.id"
-                :avatar="liveroomItem.avatar"
+                type="bilibili"
               >
                 <el-button
                   type="primary"
