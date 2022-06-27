@@ -18,15 +18,29 @@
 import { watch, ref } from "@vue/runtime-core";
 import StatsCard from "../StatsCard.vue";
 import StatsCardContent from "../StatsCardContent.vue";
-// const props = defineProps(["version", "updateDate", "runningTime"]);
-const props = defineProps(["data"]);
-let { version, updateDate, runningTime } = props.data;
+const props = defineProps({
+  version: {
+    default: '0.0.0',
+    type: String
+  },
+  updateDate: {
+    default: '2022.8.1',
+    type: String
+  },
+  runningTime: {
+    default: 0,
+    type: Number
+  }
+});
+// const props = defineProps(["data"]);
+// let { version, updateDate, runningTime } = props.data;
 
-let runningTimeString = ref(getTimeStr(runningTime));
+let runningTimeString = ref(getTimeStr(props.runningTime));
 
 watch(
-  () => runningTime,
+  () => props.runningTime,
   (count, prevCount) => {
+    console.log(prevCount);
     runningTimeString.value = getTimeStr(prevCount);
   }
 );

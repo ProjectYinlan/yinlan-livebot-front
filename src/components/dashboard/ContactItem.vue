@@ -36,15 +36,15 @@ let avatarUrl = '/assets/imgs/yinlan.jpg';
 switch (props.type) {
 
     case "friend":
-        avatarUrl = `http://q2.qlogo.cn/headimg_dl?dst_uin=${props.number}&spec=640`
+        avatarUrl = `//q2.qlogo.cn/headimg_dl?dst_uin=${props.number}&spec=640`
         break;
 
     case "group":
-        avatarUrl = `http://p.qlogo.cn/gh/${props.number}/${props.number}/640/`
+        avatarUrl = `//p.qlogo.cn/gh/${props.number}/${props.number}/640/`
         break;
 
     case "bilibili":
-        avatarUrl = `http://p.qlogo.cn/gh/${props.number}/${props.number}/640/`
+        avatarUrl = `/api/transfer/biliAvatar?uid=${props.number}`
         break;
 
     default:

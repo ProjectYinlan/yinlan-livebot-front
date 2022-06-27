@@ -1,46 +1,58 @@
 <template>
-  <div class="bg"></div>
-  <div class="dash-title">洇岚 控制面板</div>
+  <div>
+    <div class="bg"></div>
+    <div class="dash-title">洇岚 控制面板</div>
 
-  <div class="dash-content">
-    <div class="dash-content-col">
+    <div class="dash-content">
+      <div class="dash-content-col">
+        <OverviewStatsCard
+          :groupCount="overviewStatsCardData.groupCount"
+          :followCount="overviewStatsCardData.followCount"
+          :pushCount="overviewStatsCardData.pushCount"
+        />
+        <!-- <OverviewStatsCard :data="overviewStatsCardData" /> -->
 
-      <!-- <OverviewStatsCard :groupCount="1" followCount="1" pushCount="1" /> -->
-      <OverviewStatsCard :data="data.stats.overview" />
+        <AuditControlCard :auditList="auditControlCardData" />
+      </div>
 
-      <AuditControlCard :auditList="data.cards.auditList" />
-    
-    </div>
+      <div class="dash-content-col">
+        <BilibiliStatsCard
+          :mode="bilibiliStatsCardData.mode"
+          :accountName="bilibiliStatsCardData.accountName"
+          :followUserCount="bilibiliStatsCardData.followUserCount"
+        />
+        <!-- <BilibiliStatsCard :data="bilibiliStatsCardData" /> -->
 
-    <div class="dash-content-col">
-     
-      <!-- <BilibiliStatsCard mode="auth" accountName="路过的玖叁" followUserCount="1" /> -->
-      <BilibiliStatsCard :data="data.stats.bilibili" />
+        <LiveroomControlCard :liveroomList="liveroomControlCardData" />
+      </div>
 
-      <LiveroomControlCard :liveroomList="data.cards.liveroomList" />
-      
-    </div>
+      <div class="dash-content-col">
+        <YinlanStatsCard
+          :version="yinlanStatsCardData.version"
+          :updateDate="yinlanStatsCardData.updateDate"
+          :runningTime="yinlanRunningTime"
+        />
+        <!-- <YinlanStatsCard :data="yinlanStatsCardData" /> -->
 
-    <div class="dash-content-col">
+        <BroadcastControlCard :radio="broadcastRadio" :input="broadcastInput" />
 
-      <!-- <YinlanStatsCard version="0.1.0" updateDate="2022.8.1" :runningTime="yinlanRunningTime" /> -->
-      <YinlanStatsCard :data="data.stats.yinlan" />
+        <!-- <LiveroomOptionsControlCard :auth="bilibotAuth" :interval="bilibotInterval" :accountStatus="bilibotAccountStatus" /> -->
+        <LiveroomOptionsControlCard
+          :auth="bilibotAuth"
+          :interval="bilibotInterval"
+          :accountStatus="bilibotAccountStatus"
+        />
+      </div>
 
-      <BroadcastControlCard :radio="broadcastRadio" :input="broadcastInput" />
-
-      <!-- <LiveroomOptionsControlCard :auth="bilibotAuth" :interval="bilibotInterval" :accountStatus="bilibotAccountStatus" /> -->
-      <LiveroomOptionsControlCard :auth="bilibotAuth" :interval="bilibotInterval" :accountStatus="bilibotAccountStatus" />
-
-    </div>
-
-    <div class="dash-content-col">
-      <ContactListControlCard :contactList="data.cards.contactList" />
+      <div class="dash-content-col">
+        <ContactListControlCard :contactList="contactListControlCardData" />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import "/stylesheets/dashboard.css";
+import "../../stylesheets/dashboard.css";
 
 import OverviewStatsCard from "../components/dashboard/StatsCards/OverviewStatsCard.vue";
 import BilibiliStatsCard from "../components/dashboard/StatsCards/BilibiliStatsCard.vue";
@@ -52,26 +64,58 @@ import BroadcastControlCard from "../components/dashboard/ControlCards/Broadcast
 import LiveroomOptionsControlCard from "../components/dashboard/ControlCards/LiveroomOptionsControlCard.vue";
 import ContactListControlCard from "../components/dashboard/ControlCards/ContactListControlCard.vue";
 
-import { ref } from "vue";
-import { data } from "../../mock/dash.json";
+import { ref, onMounted } from "vue";
+// import { data } from "../../mock/dash.json";
 
-console.log(data);
+let overviewStatsCardData = ref({});
+let bilibiliStatsCardData = ref({});
+let yinlanStatsCardData = ref({});
 
 let yinlanRunningTime = ref(0);
-// setInterval(()=>{
-//   yinlanRunningTime.value ++;
-// }, 1000)
+
+let auditControlCardData = ref([]);
+let liveroomControlCardData = ref({});
+let contactListControlCardData = ref({});
 
 let broadcastRadio = ref("群聊");
 let broadcastInput = ref("");
 
-let bilibotAuth = ref(data.cards.liveroomOptions.mode == 'auth' ? true : false);
-let bilibotInterval = ref(data.cards.liveroomOptions.interval);
-let bilibotAccountStatus = ref(data.cards.liveroomOptions.mode == 'authed' ? true : false);
+let bilibotAuth = ref(false);
+let bilibotInterval = ref(60);
+let bilibotAccountStatus = ref(false);
 
+async function loadData() {
+  const res = await fetch("/api/dash");
+  let data = await res.json();
 
+  if (data.code) return;
+  data = data.data;
 
+  console.log(data);
 
+  overviewStatsCardData.value = data.stats.overview;
+  bilibiliStatsCardData.value = data.stats.bilibili;
+  yinlanStatsCardData.value = data.stats.yinlan;
+
+  yinlanRunningTime.value = yinlanStatsCardData.value.runningTime;
+
+  auditControlCardData.value = data.cards.auditList;
+  liveroomControlCardData.value = data.cards.liveroomList;
+  contactListControlCardData.value = data.cards.contactList;
+
+  bilibotAuth.value = data.cards.liveroomOptions.mode == "auth" ? true : false;
+  bilibotInterval.value = data.cards.liveroomOptions.interval;
+  bilibotAccountStatus.value =
+    data.cards.liveroomOptions.accountStatus == "authed" ? true : false;
+
+  setInterval(() => {
+    yinlanRunningTime.value++;
+  }, 1000);
+}
+
+onMounted(async () => {
+  await loadData();
+});
 </script>
 
 <style></style>

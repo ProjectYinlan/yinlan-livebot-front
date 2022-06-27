@@ -17,10 +17,23 @@
 <script setup>
 import StatsCard from "../StatsCard.vue";
 import StatsCardContent from "../StatsCardContent.vue";
-// defineProps(["groupCount", "followCount", "pushCount"]);
-const props = defineProps(["data"]);
-console.log(props)
-let { groupCount, followCount, pushCount } = props.data;
+defineProps({
+  groupCount: {
+    default: 0,
+    type: Number
+  },
+  followCount: {
+    default: 0,
+    type: Number
+  },
+  pushCount: {
+    default: 0,
+    type: Number
+  }
+});
+// const props = defineProps(["data"]);
+// console.log(props)
+// let { groupCount, followCount, pushCount } = props.data;
 </script>
 
 <style scoped>
