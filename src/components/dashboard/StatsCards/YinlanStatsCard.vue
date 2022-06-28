@@ -39,9 +39,8 @@ let runningTimeString = ref(getTimeStr(props.runningTime));
 
 watch(
   () => props.runningTime,
-  (count, prevCount) => {
-    console.log(prevCount);
-    runningTimeString.value = getTimeStr(prevCount);
+  (count) => {
+    runningTimeString.value = getTimeStr(count);
   }
 );
 

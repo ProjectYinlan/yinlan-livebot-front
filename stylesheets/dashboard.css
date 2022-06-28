@@ -3,6 +3,10 @@
   padding: 0 !important;
 }
 
+.el-button+.el-button {
+  margin: 0;
+}
+
 button.is-circle.el-button {
   width: 32px;
 }
@@ -192,6 +196,18 @@ button.is-circle.el-button {
   height: 680px;
 }
 
+.dash-control-card[size="md"][with-btn] .dash-control-card-content {
+  height: 400px;
+}
+
+.dash-control-card[size="sm"][with-btn] .dash-control-card-content {
+  height: 150px;
+}
+
+.dash-control-card[size="lg"][with-btn] .dash-control-card-content {
+  height: 630px;
+}
+
 /* 操作卡片 - 申请列表卡片 */
 .dash-control-card-audit-card {
   @apply rounded-lg p-4 my-4 flex flex-col;
@@ -206,6 +222,10 @@ button.is-circle.el-button {
 
 .dash-control-card-audit-card .top .left {
   @apply flex flex-col;
+}
+
+.dash-control-card-audit-card .top .right {
+  height: 136px;
 }
 
 .dash-control-card-audit-card-title {
@@ -228,23 +248,28 @@ button.is-circle.el-button {
 }
 
 .dash-control-card-audit-card-name {
-  @apply py-1;
+  @apply py-0.5;
   font-size: 18px;
   font-weight: 600;
 }
 
 .dash-control-card-audit-card-number {
-  @apply py-1;
+  @apply py-0.5;
   font-size: 16px;
 }
 
 .dash-control-card-audit-card-desc {
-  @apply text-gray-500 py-1 mb-2;
+  @apply text-gray-500 py-0.5;
   font-size: 14px;
   max-width: 180px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dash-control-card-audit-card-timestamp {
+  @apply text-gray-400 mb-2;
+  font-size: 12px;
 }
 
 .dash-control-card-audit-card-avatar {
@@ -253,11 +278,38 @@ button.is-circle.el-button {
   height: auto;
 }
 
+.dash-control-card-audit-card-detail-dialog > div {
+  @apply flex;
+  align-items: center;
+}
 
-/* 直播间列表卡片 */
+.dash-control-card-audit-card-detail-dialog {
+  @apply grid grid-cols-2;
+}
+
+.dash-control-card-audit-card-detail-dialog .avatar {
+  @apply rounded-full w-24 mr-4;
+}
+
+.dash-control-card-audit-card-detail-dialog .desc {
+  word-break: break-all;
+}
+
+.dash-control-card-audit-card-detail-dialog > * > .right {
+  @apply flex flex-col;
+  max-width: 70%;
+}
+
+
+
+/* 列表卡片 */
 .dash-control-card-contact-item {
   @apply flex py-2 px-3;
   align-items: center
+}
+
+.dash-control-card-contact-item .tag {
+  @apply mr-2;
 }
 
 .dash-control-card-contact-item-avatar {
@@ -292,6 +344,6 @@ button.is-circle.el-button {
   align-self: flex-end;
 }
 
-.dash-control-card-apply-btn-group {
-  @apply flex justify-between;
+.dash-control-card-apply {
+  @apply flex flex-row-reverse justify-between;
 }

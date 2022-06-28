@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div class="bg"></div>
     <div class="dash-title">洇岚 控制面板</div>
 
@@ -67,6 +67,8 @@ import ContactListControlCard from "../components/dashboard/ControlCards/Contact
 import { ref, onMounted } from "vue";
 // import { data } from "../../mock/dash.json";
 
+let loading = ref(true);
+
 let overviewStatsCardData = ref({});
 let bilibiliStatsCardData = ref({});
 let yinlanStatsCardData = ref({});
@@ -84,14 +86,17 @@ let bilibotAuth = ref(false);
 let bilibotInterval = ref(60);
 let bilibotAccountStatus = ref(false);
 
-async function loadData() {
+
+
+async function loadData(flag) {
+
   const res = await fetch("/api/dash");
   let data = await res.json();
 
+  loading.value = false;
+
   if (data.code) return;
   data = data.data;
-
-  console.log(data);
 
   overviewStatsCardData.value = data.stats.overview;
   bilibiliStatsCardData.value = data.stats.bilibili;
@@ -108,13 +113,18 @@ async function loadData() {
   bilibotAccountStatus.value =
     data.cards.liveroomOptions.accountStatus == "authed" ? true : false;
 
-  setInterval(() => {
-    yinlanRunningTime.value++;
-  }, 1000);
+  if (flag) {
+    setInterval(() => {
+      yinlanRunningTime.value++;
+    }, 1000);
+  }
 }
 
 onMounted(async () => {
-  await loadData();
+  await loadData(1);
+  setInterval(async ()=>{
+    await loadData();
+}, 60000)
 });
 </script>
 

@@ -7,24 +7,57 @@
     </div>
 
     <div class="dash-control-card-content">
-      <el-scrollbar>
-        <div v-for="auditItem in auditList" :key="auditItem.eid">
+      <el-scrollbar v-if="auditListData.length">
+        <div v-for="auditItem in auditListData" :key="auditItem.eid">
           <AuditItem
+            :eventId="auditItem.eid"
             :type="auditItem.type"
             :name="auditItem.name"
-            :number="auditItem.id"
+            :id="auditItem.id"
+            :fromName="auditItem.fromName"
+            :fromId="auditItem.fromId"
             :desc="auditItem.desc"
-            :avatar="auditItem.avatar"
+            :ts="auditItem.ts"
+            @operated="removeItem"
           />
         </div>
       </el-scrollbar>
+      <el-empty v-else description="这里空空如也" />
     </div>
   </div>
 </template>
 
 <script setup>
 import AuditItem from "../AuditItem.vue";
-defineProps(["auditList"]);
+
+import { ref, watch } from "vue";
+
+const props = defineProps(["auditList"]);
+
+let auditListData = ref(props.auditList);
+
+setInterval(async () => {
+  let resp = await fetch("/api/dash/control/auditList");
+  let data = await resp.json();
+
+  if (data.code) return;
+
+  auditListData.value = data.data;
+}, 5000);
+
+watch(
+  () => props.auditList,
+  (newItem, originItem) => {
+    auditListData.value = newItem;
+  }
+);
+
+function removeItem(eid) {
+  for (let i = 0; i < auditListData.value.length; i++) {
+    const e = auditListData.value[i];
+    if (e.eid == eid) auditListData.value.splice(i, 1);
+  }
+}
 </script>
 
 <style scoped>

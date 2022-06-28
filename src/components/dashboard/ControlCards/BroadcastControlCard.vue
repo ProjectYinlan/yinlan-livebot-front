@@ -1,5 +1,5 @@
 <template>
-  <div class="dash-control-card" size="sm">
+  <div class="dash-control-card" size="sm" with-btn>
     <div class="dash-control-card-title">
       <el-icon class="dash-control-card-title-icon"><CopyDocument /></el-icon>
       <div class="dash-control-card-title-content">广播</div>
@@ -20,13 +20,9 @@
         type="textarea"
         placeholder="在这里输入需要广播的内容嗷"
       />
-      <el-button
-        type="primary"
-        class="
-          dash-control-card-broadcast-content-item dash-control-card-apply-btn
-        "
-        >发送</el-button
-      >
+    </div>
+    <div class="dash-control-card-apply">
+      <el-button type="primary">发送</el-button>
     </div>
   </div>
 </template>
@@ -35,12 +31,12 @@
 defineProps({
   radio: {
     type: String,
-    default: "群聊"
+    default: "群聊",
   },
   input: {
     type: String,
-    default: ""
-  }
+    default: "",
+  },
 });
 </script>
 

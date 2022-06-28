@@ -1,5 +1,5 @@
 <template>
-  <div class="dash-control-card" size="sm">
+  <div class="dash-control-card" size="sm" with-btn>
     <div class="dash-control-card-title">
       <el-icon class="dash-control-card-title-icon"><Setting /></el-icon>
       <div class="dash-control-card-title-content">直播检测选项</div>
@@ -30,18 +30,16 @@
         />
         秒
       </div>
+    </div>
+    <div class="dash-control-card-apply">
+      <el-button type="primary">应用</el-button>
 
-      <div class="dash-control-card-apply-btn-group">
-        <el-button
-          id="dash-control-card-liveroom-options-log-btn"
-          type="primary"
-          plain
-          :disabled="!auth"
-          >{{ accountStatus ? "登出" : "登入" }}</el-button
-        >
-
-        <el-button type="primary">应用</el-button>
-      </div>
+      <el-button
+        type="primary"
+        plain
+        :disabled="!auth"
+        >{{ accountStatus ? "登出" : "登入" }}</el-button
+      >
     </div>
   </div>
 </template>
@@ -58,10 +56,9 @@ const props = defineProps({
   },
   accountStatus: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
-
 </script>
 
 <style scoped>
