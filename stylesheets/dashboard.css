@@ -3,10 +3,6 @@
   padding: 0 !important;
 }
 
-.el-button+.el-button {
-  margin: 0;
-}
-
 button.is-circle.el-button {
   width: 32px;
 }
@@ -175,7 +171,7 @@ button.is-circle.el-button {
 
 /* 操作卡片 - 标题内容 */
 .dash-control-card-title-content {
-  @apply ml-2;
+  @apply ml-2 w-5/6;
   font-size: 18px;
 }
 
@@ -346,4 +342,8 @@ button.is-circle.el-button {
 
 .dash-control-card-apply {
   @apply flex flex-row-reverse justify-between;
+}
+
+.dash-control-card-apply .el-button {
+  @apply m-0;
 }

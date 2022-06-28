@@ -3,57 +3,46 @@
     <div class="dash-control-card-title">
       <el-icon class="dash-control-card-title-icon"><ChatDotSquare /></el-icon>
       <div class="dash-control-card-title-content">群/好友 列表</div>
+      <div class="dash-control-card-title-btn">
+        <el-button circle @click="refresh()"
+          ><el-icon><Refresh /></el-icon
+        ></el-button>
+      </div>
     </div>
 
     <div class="dash-control-card-content">
       <el-tabs :stretch="true">
         <el-tab-pane label="群聊">
-          <el-scrollbar v-if="contactList.group && contactList.group.length">
-            <div v-for="groupItem in contactList.group" :key="groupItem.id">
-              <ContactItem
-                :name="groupItem.name"
-                :number="groupItem.id"
+          <el-scrollbar
+            v-if="contactListData.group && contactListData.group.length"
+          >
+            <div v-for="groupItem in contactListData.group" :key="groupItem.id">
+              <ContactListItem
                 type="group"
-              >
-                <el-tag
-                  class="tag"
-                  v-if="groupItem.permission == 'OWNER'"
-                  type="warning"
-                  >群主</el-tag
-                >
-                <el-tag
-                  class="tag"
-                  v-if="groupItem.permission == 'ADMINISTRATOR'"
-                  type="success"
-                  >管理</el-tag
-                >
-                <el-tag
-                  class="tag"
-                  v-if="groupItem.permission == 'MEMBER'"
-                  type=""
-                  >成员</el-tag
-                >
-                <el-button type="danger" circle
-                  ><el-icon><Delete /></el-icon
-                ></el-button>
-              </ContactItem>
+                :id="groupItem.id"
+                :name="groupItem.name"
+                :permission="groupItem.permission"
+                @removed="removeItem"
+              />
             </div>
           </el-scrollbar>
           <el-empty v-else description="这里空空如也" />
         </el-tab-pane>
 
         <el-tab-pane label="好友">
-          <el-scrollbar v-if="contactList.friend && contactList.friend.length">
-            <div v-for="friendItem in contactList.friend" :key="friendItem.id">
-              <ContactItem
-                :name="friendItem.name"
-                :number="friendItem.id"
+          <el-scrollbar
+            v-if="contactListData.friend && contactListData.friend.length"
+          >
+            <div
+              v-for="friendItem in contactListData.friend"
+              :key="friendItem.id"
+            >
+              <ContactListItem
                 type="friend"
-              >
-                <el-button type="danger" circle
-                  ><el-icon><Delete /></el-icon
-                ></el-button>
-              </ContactItem>
+                :id="friendItem.id"
+                :name="friendItem.name"
+                @removed="removeItem"
+              />
             </div>
           </el-scrollbar>
           <el-empty v-else description="这里空空如也" />
@@ -64,8 +53,52 @@
 </template>
 
 <script setup>
-import ContactItem from "../ContactItem.vue";
-defineProps(["contactList"]);
+import { ref, watch } from "vue";
+import { ElNotification } from "element-plus";
+import ContactListItem from "../ContactListItem.vue";
+const props = defineProps(["contactList"]);
+
+let contactListData = ref(props.contactList);
+
+watch(
+  () => props.contactList,
+  (newItem, originItem) => {
+    contactListData.value = newItem;
+  }
+);
+
+function removeItem(data) {
+  const { id, type } = data;
+
+  for (let i = 0; i < contactListData.value[type].length; i++) {
+    const e = contactListData.value[type][i];
+    if (e.id == id) {
+      contactListData.value[type].splice(i, 1);
+      return;
+    }
+  }
+}
+
+async function refresh() {
+  let resp = await fetch("/api/dash/control/contactList");
+  let data = await resp.json();
+
+  if (data.code) {
+    ElNotification({
+      title: "刷新失败",
+      message: `${data.code}：${data.msg}`,
+      type: "error",
+      position: "bottom-right",
+    });
+  } else {
+    ElNotification({
+      title: "刷新成功",
+      type: "success",
+      position: "bottom-right",
+    });
+    contactListData.value = data.data;
+  }
+}
 </script>
 
 <style scoped>

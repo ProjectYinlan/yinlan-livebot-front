@@ -36,14 +36,7 @@ const props = defineProps(["auditList"]);
 
 let auditListData = ref(props.auditList);
 
-setInterval(async () => {
-  let resp = await fetch("/api/dash/control/auditList");
-  let data = await resp.json();
-
-  if (data.code) return;
-
-  auditListData.value = data.data;
-}, 5000);
+setInterval(async () => {refresh()}, 5000);
 
 watch(
   () => props.auditList,
@@ -51,6 +44,15 @@ watch(
     auditListData.value = newItem;
   }
 );
+
+async function refresh(flag) {
+  let resp = await fetch("/api/dash/control/auditList");
+  let data = await resp.json();
+
+  if (data.code) return;
+
+  auditListData.value = data.data;
+}
 
 function removeItem(eid) {
   for (let i = 0; i < auditListData.value.length; i++) {
