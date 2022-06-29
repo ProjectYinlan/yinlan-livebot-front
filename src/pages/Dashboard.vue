@@ -57,11 +57,7 @@
       </div>
     </div>
 
-    <div class="dash-footer">
-      <el-link href="https://livebot.yinlan.furbot.icu">帮助文档</el-link> |
-      <el-link href="https://github.com/colour93/yinlan-livebot">GitHub</el-link> |
-      Made with ♥ by <el-link href="https://fur93.icu">玖叁</el-link> 2022
-    </div>
+    <Footer />
   </div>
 </template>
 
@@ -77,6 +73,8 @@ import LiveroomControlCard from "../components/dashboard/ControlCards/LiveroomCo
 import BroadcastControlCard from "../components/dashboard/ControlCards/BroadcastControlCard.vue";
 import LiveroomOptionsControlCard from "../components/dashboard/ControlCards/LiveroomOptionsControlCard.vue";
 import ContactListControlCard from "../components/dashboard/ControlCards/ContactListControlCard.vue";
+
+import Footer from "../components/Footer.vue";
 
 import { ref, onMounted } from "vue";
 

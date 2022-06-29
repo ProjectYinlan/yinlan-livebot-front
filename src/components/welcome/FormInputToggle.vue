@@ -6,6 +6,8 @@
         type="checkbox"
         class="input-toggle"
         :id="id"
+        :checked="toggleValue"
+        @change="changeHandle"
       />
       <div class="input-toggle-switch">
         <div class="input-toggle-inner">
@@ -17,10 +19,21 @@
 </template>
 
 <script setup>
-defineProps([
+
+import { ref } from "vue";
+const emit = defineEmits(['update:modelValue']);
+const props = defineProps([
   "id",
-  "name"
+  "name",
+  "value"
 ])
+
+let toggleValue = ref(props.value);
+function changeHandle (e) {
+  toggleValue.value = e.target.checked;
+  emit('update:modelValue', toggleValue.value);
+}
+
 </script>
 
 <style></style>

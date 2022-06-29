@@ -1,17 +1,32 @@
 <template>
   <div class="input-group">
     <label :for="id">{{ name }}</label>
-    <input :type="type" :id="id" />
+    <input
+      :type="type"
+      :id="id"
+      :placeholder="placeholder"
+      :value="inputValue"
+      @input="inputHandle"
+    />
   </div>
 </template>
 
 <script setup>
-defineProps([
-  "id",
-  "name",
-  "type",
-  "value"
-])
+
+import { ref } from "vue";
+const emit = defineEmits(['update:modelValue']);
+const props = defineProps(["id", "name", "value", "type", "placeholder"]);
+
+let inputValue = ref(props.value);
+function inputHandle (e) {
+  inputValue.value = e.target.value;
+  let emitValue = inputValue.value;
+  if (props.type == 'number') {
+    emitValue = parseInt(emitValue);
+  }
+  emit('update:modelValue', emitValue);
+}
+
 </script>
 
 <style></style>
