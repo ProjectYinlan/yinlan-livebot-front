@@ -4,7 +4,7 @@
       <el-icon class="dash-control-card-title-icon"><ChatDotSquare /></el-icon>
       <div class="dash-control-card-title-content">群/好友 列表</div>
       <div class="dash-control-card-title-btn">
-        <el-button circle @click="refresh()"
+        <el-button circle @click="refresh()" :disabled="refreshing"
           ><el-icon><Refresh /></el-icon
         ></el-button>
       </div>
@@ -41,6 +41,7 @@
                 type="friend"
                 :id="friendItem.id"
                 :name="friendItem.name"
+                :role="friendItem.role"
                 @removed="removeItem"
               />
             </div>
@@ -59,6 +60,7 @@ import ContactListItem from "../ContactListItem.vue";
 const props = defineProps(["contactList"]);
 
 let contactListData = ref(props.contactList);
+let refreshing = ref(false);
 
 watch(
   () => props.contactList,
@@ -80,8 +82,13 @@ function removeItem(data) {
 }
 
 async function refresh() {
+
+  refreshing.value = true;
+
   let resp = await fetch("/api/dash/control/contactList");
   let data = await resp.json();
+
+  refreshing.value = false;
 
   if (data.code) {
     ElNotification({

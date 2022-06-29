@@ -7,18 +7,24 @@ button.is-circle.el-button {
   width: 32px;
 }
 
+button.is-circle.el-button.el-button--large {
+  width: 40px;
+}
+
 :root {
+  --color-broadcast-bg: #f0f5ff;
+  --color-broadcast-text: #2f54eb;
+  --color-broadcast-broder: #c5d8ff;
   --color-friend: #1d4ed8;
   --color-group: #047857;
-  --color-bilibot-auth: #ff85c0;
-  --color-bilibot-unauth: #69c0ff;
+  --color-bilibot-auth: #fb7299;
+  --color-bilibot-anonymous: #a29bfe;
   --color-stats-bg-overview-dark: #0066d3;
   --color-stats-bg-overview-light: #70d6ff;
   --color-stats-bg-bilibili-dark: #f759ab;
   --color-stats-bg-bilibili-light: #ffadd2;
   --color-stats-bg-yinlan-dark: #08979c;
   --color-stats-bg-yinlan-light: #87e8de;
-
 }
 
 /* 总览 */
@@ -64,14 +70,80 @@ button.is-circle.el-button {
 
 /* 面板标题 */
 .dash-title {
-  @apply px-20 py-5 w-full;
-  font-size: 36px;
+  @apply pt-7 pb-2 w-full flex flex-col lg:flex-row justify-between;
+}
+
+.dash-title > div {
+  @apply mx-4;
+}
+
+.dash-title, 
+.dash-content {
+  @apply px-5 xl:px-20;
+}
+
+.dash-title-content {
+  font-size: 32px;
   font-weight: 500;
+}
+
+/* 公告栏 */
+.dash-title-broadcast {
+  @apply flex flex-col lg:flex-row mt-2 lg:mt-0 lg:ml-4 px-4 py-3 flex-grow rounded-lg;
+  background: var(--color-broadcast-bg);
+  color: var(--color-broadcast-text);
+  border: 1px solid var(--color-broadcast-broder);
+}
+
+.dash-title-broadcast > * {
+  @apply mx-1;
+}
+
+.dash-title-broadcast::before {
+  content: "[公告栏]";
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* 设置按钮 */
+div.dash-title-settings {
+  @apply ml-0;
+  position: absolute;
+  right: 20px;
+}
+
+.dash-title-settings-avatar {
+  @apply mr-2;
+}
+
+/* 响应式标题布局 */
+@media (min-width: 1024px) {
+
+  .dash-title {
+    align-items: center;
+  }
+
+  .dash-title-broadcast {
+    align-items: center;
+    max-width: calc(100% - 16rem);
+  }
+
+  .dash-title-broadcast::before {
+    @apply mr-2;
+    content: "[公告栏]";
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  div.dash-title-settings {
+    @apply relative ml-0;
+    right: 0;
+  }
 }
 
 /* 面板内容 */
 .dash-content {
-  @apply px-16 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  @apply w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
 }
 
 /* 面板内容列 */
@@ -204,6 +276,11 @@ button.is-circle.el-button {
   height: 630px;
 }
 
+.dash-control-card-title-btn {
+  width: 20px;
+  height: 20px;
+}
+
 /* 操作卡片 - 申请列表卡片 */
 .dash-control-card-audit-card {
   @apply rounded-lg p-4 my-4 flex flex-col;
@@ -249,6 +326,14 @@ button.is-circle.el-button {
   font-weight: 600;
 }
 
+.dash-control-card-audit-card-name,
+.dash-control-card-audit-card-desc {
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .dash-control-card-audit-card-number {
   @apply py-0.5;
   font-size: 16px;
@@ -257,10 +342,6 @@ button.is-circle.el-button {
 .dash-control-card-audit-card-desc {
   @apply text-gray-500 py-0.5;
   font-size: 14px;
-  max-width: 180px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .dash-control-card-audit-card-timestamp {
@@ -336,6 +417,35 @@ button.is-circle.el-button {
   @apply my-1;
 }
 
+/* 登录B站对话框 */
+.dash-control-card-live-options-auth-dialog {
+  @apply flex justify-center w-full;
+}
+
+.dash-control-card-live-options-auth-dialog-content {
+  @apply flex flex-col md:flex-row;
+  max-width: 400px;
+  align-items: center;
+}
+
+.dash-control-card-live-options-auth-dialog-content > .context {
+  @apply flex flex-col;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+
+  .dash-control-card-live-options-auth-dialog-content > .context {
+    text-align: start;
+  }
+
+}
+
+
+.dash-control-card-live-options-auth-dialog-content img {
+  width: 144px;
+}
+
 .dash-control-card-apply-btn {
   align-self: flex-end;
 }
@@ -346,4 +456,8 @@ button.is-circle.el-button {
 
 .dash-control-card-apply .el-button {
   @apply m-0;
+}
+
+.dash-footer {
+  @apply my-4 w-full text-center text-gray-400;
 }

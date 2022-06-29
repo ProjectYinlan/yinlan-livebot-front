@@ -1,7 +1,24 @@
 <template>
   <div v-loading="loading">
     <div class="bg"></div>
-    <div class="dash-title">洇岚 控制面板</div>
+    <div class="dash-title">
+      <div class="dash-title-content">洇岚 控制面板</div>
+      <div class="dash-title-broadcast" v-html="broadcastMsg"></div>
+      <div class="dash-title-settings">
+        <el-avatar class="dash-title-settings-avatar" shape="circle" :size="40" :src="`//q2.qlogo.cn/headimg_dl?dst_uin=${accountData.id}&spec=640`" />
+        <el-dropdown>
+          <el-button type="" size="large" circle
+            ><el-icon><Setting /></el-icon
+          ></el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>设置</el-dropdown-item>
+              <el-dropdown-item divided>登出</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+    </div>
 
     <div class="dash-content">
       <div class="dash-content-col">
@@ -10,8 +27,6 @@
           :followCount="overviewStatsCardData.followCount"
           :pushCount="overviewStatsCardData.pushCount"
         />
-        <!-- <OverviewStatsCard :data="overviewStatsCardData" /> -->
-
         <AuditControlCard :auditList="auditControlCardData" />
       </div>
 
@@ -21,7 +36,6 @@
           :accountName="bilibiliStatsCardData.accountName"
           :followUserCount="bilibiliStatsCardData.followUserCount"
         />
-        <!-- <BilibiliStatsCard :data="bilibiliStatsCardData" /> -->
 
         <LiveroomControlCard :liveroomList="liveroomControlCardData" />
       </div>
@@ -32,21 +46,21 @@
           :updateDate="yinlanStatsCardData.updateDate"
           :runningTime="yinlanRunningTime"
         />
-        <!-- <YinlanStatsCard :data="yinlanStatsCardData" /> -->
 
-        <BroadcastControlCard :radio="broadcastRadio" :input="broadcastInput" />
+        <BroadcastControlCard />
 
-        <!-- <LiveroomOptionsControlCard :auth="bilibotAuth" :interval="bilibotInterval" :accountStatus="bilibotAccountStatus" /> -->
-        <LiveroomOptionsControlCard
-          :auth="bilibotAuth"
-          :interval="bilibotInterval"
-          :accountStatus="bilibotAccountStatus"
-        />
+        <LiveroomOptionsControlCard :data="liveroomOptionsControlCardData" />
       </div>
 
       <div class="dash-content-col">
         <ContactListControlCard :contactList="contactListControlCardData" />
       </div>
+    </div>
+
+    <div class="dash-footer">
+      <el-link href="https://livebot.yinlan.furbot.icu">帮助文档</el-link> |
+      <el-link href="https://github.com/colour93/yinlan-livebot">GitHub</el-link> |
+      Made with ♥ by <el-link href="https://fur93.icu">玖叁</el-link> 2022
     </div>
   </div>
 </template>
@@ -65,9 +79,11 @@ import LiveroomOptionsControlCard from "../components/dashboard/ControlCards/Liv
 import ContactListControlCard from "../components/dashboard/ControlCards/ContactListControlCard.vue";
 
 import { ref, onMounted } from "vue";
-// import { data } from "../../mock/dash.json";
 
 let loading = ref(true);
+
+let broadcastMsg = ref("未能从公告板获取数据，不过这并不影响使用");
+let accountData = ref({});
 
 let overviewStatsCardData = ref({});
 let bilibiliStatsCardData = ref({});
@@ -77,26 +93,22 @@ let yinlanRunningTime = ref(0);
 
 let auditControlCardData = ref([]);
 let liveroomControlCardData = ref({});
+let liveroomOptionsControlCardData = ref({});
 let contactListControlCardData = ref({});
-
-let broadcastRadio = ref("群聊");
-let broadcastInput = ref("");
-
-let bilibotAuth = ref(false);
-let bilibotInterval = ref(60);
-let bilibotAccountStatus = ref(false);
-
-
 
 async function loadData(flag) {
 
-  const res = await fetch("/api/dash");
+  let res = await fetch("https://yinlan-bot.oss-cn-beijing.aliyuncs.com/livebot/broadcast.json");
   let data = await res.json();
+  broadcastMsg.value = data.content;
 
-  loading.value = false;
+  res = await fetch("/api/dash");
+  data = await res.json();
 
   if (data.code) return;
   data = data.data;
+
+  accountData.value = data.account;
 
   overviewStatsCardData.value = data.stats.overview;
   bilibiliStatsCardData.value = data.stats.bilibili;
@@ -106,25 +118,23 @@ async function loadData(flag) {
 
   auditControlCardData.value = data.cards.auditList;
   liveroomControlCardData.value = data.cards.liveroomList;
+  liveroomOptionsControlCardData.value = data.cards.liveroomOptions;
   contactListControlCardData.value = data.cards.contactList;
-
-  bilibotAuth.value = data.cards.liveroomOptions.mode == "auth" ? true : false;
-  bilibotInterval.value = data.cards.liveroomOptions.interval;
-  bilibotAccountStatus.value =
-    data.cards.liveroomOptions.accountStatus == "authed" ? true : false;
 
   if (flag) {
     setInterval(() => {
       yinlanRunningTime.value++;
     }, 1000);
   }
+
+  loading.value = false;
 }
 
 onMounted(async () => {
   await loadData(1);
-  setInterval(async ()=>{
+  setInterval(async () => {
     await loadData();
-}, 60000)
+  }, 60000);
 });
 </script>
 

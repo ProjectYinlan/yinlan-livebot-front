@@ -1,6 +1,6 @@
 <template>
   <StatsCard type="bilibili" title="B站账号信息">
-    <StatsCardContent name="工作模式" :value="mode == 'auth' ? '登陆账号' : (mode == 'anonymous' ? '匿名' : '未知')">
+    <StatsCardContent name="工作模式" :value="mode == 'auth' ? '登录账号' : (mode == 'anonymous' ? '匿名' : '未知')">
       <el-icon><Monitor /></el-icon>
     </StatsCardContent>
 
@@ -23,7 +23,7 @@ const props = defineProps({
     type: String
   },
   accountName: {
-    default: "未知",
+    default: "未登录",
     type: String
   },
   followUserCount: {

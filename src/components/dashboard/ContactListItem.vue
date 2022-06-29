@@ -1,6 +1,6 @@
 <template>
   <ContactItem :name="name" :number="id" :type="type">
-    <el-tag class="tag" v-if="type == 'group'" :type="tagType">{{
+    <el-tag class="tag" v-if="tagShow" :type="tagType">{{
       tagText
     }}</el-tag>
     <el-popconfirm
@@ -24,6 +24,8 @@ import { ElNotification } from "element-plus";
 
 import ContactItem from "./ContactItem.vue";
 
+const emit = defineEmits(["removed"]);
+
 const props = defineProps({
   type: {
     default: "TYPE",
@@ -41,30 +43,71 @@ const props = defineProps({
     default: null,
     type: String,
   },
+  role: {
+    default: null,
+    type: String,
+  }
 });
 
 let tagType = "";
 let tagText = "";
+let tagShow = true;
 
-switch (props.permission) {
-  case "MEMBER":
-    tagType = "";
-    tagText = "成员";
-    break;
+if (props.type == 'group') {
 
-  case "ADMINISTRATOR":
-    tagType = "success";
-    tagText = "管理";
-    break;
+  switch (props.permission) {
+    case "MEMBER":
+      tagType = "";
+      tagText = "成员";
+      break;
 
-  case "OWNER":
-    tagType = "warning";
-    tagText = "群主";
-    break;
+    case "ADMINISTRATOR":
+      tagType = "success";
+      tagText = "管理";
+      break;
 
-  default:
-    break;
+    case "OWNER":
+      tagType = "warning";
+      tagText = "群主";
+      break;
+
+    default:
+      tagShow = false;
+      break;
+  }
+
 }
+
+if (props.type == 'friend') {
+
+  switch (props.role) {
+
+    case "normal":
+      tagShow = false;
+      break;
+
+    case "bot":
+      tagType = "";
+      tagText = "Bot";
+      break;
+
+    case "admin":
+      tagType = "success";
+      tagText = "管理";
+      break;
+
+    case "owner":
+      tagType = "warning";
+      tagText = "主人";
+      break;
+
+    default:
+      tagShow = false;
+      break;
+  }
+
+}
+
 
 /**
  * 删好友&群

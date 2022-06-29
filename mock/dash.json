@@ -2,6 +2,10 @@
   "code": 0,
   "msg": null,
   "data": {
+    "account": {
+      "id": 1285419578,
+      "role": "owner"
+    },
     "stats": {
       "overview": {
         "groupCount": 1,
@@ -58,8 +62,8 @@
       },
       "liveroomOptions": {
         "mode": "auth",
-        "accountStatus": "authed",
-        "interval": 10
+        "accountStatus": "unauth",
+        "interval": 20
       },
       "contactList": {
         "group": [
