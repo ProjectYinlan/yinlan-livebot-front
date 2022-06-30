@@ -13,11 +13,19 @@
 
 <script setup>
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 const emit = defineEmits(['update:modelValue']);
-const props = defineProps(["id", "name", "value", "type", "placeholder"]);
+const props = defineProps(["id", "name", "modelValue", "type", "placeholder"]);
 
-let inputValue = ref(props.value);
+let inputValue = ref(props.modelValue);
+
+watch(
+  () => props.modelValue,
+  (newItem, originItem) => {
+    inputValue.value = newItem;
+  }
+)
+
 function inputHandle (e) {
   inputValue.value = e.target.value;
   let emitValue = inputValue.value;

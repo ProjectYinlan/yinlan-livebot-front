@@ -20,15 +20,23 @@
 
 <script setup>
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps([
   "id",
   "name",
-  "value"
+  "modelValue"
 ])
 
-let toggleValue = ref(props.value);
+let toggleValue = ref(props.modelValue);
+
+watch(
+  () => props.modelValue,
+  (newItem, originItem) => {
+    toggleValue.value = newItem;
+  }
+)
+
 function changeHandle (e) {
   toggleValue.value = e.target.checked;
   emit('update:modelValue', toggleValue.value);

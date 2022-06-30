@@ -11,6 +11,14 @@
         <div class="box-title">连接信息</div>
 
         <FormInputBox
+          name="Bot QQ"
+          placeholder="Bot 所使用的QQ"
+          type="number"
+          id="input-bot-link-qq"
+          v-model="linkQQ"
+        />
+
+        <FormInputBox
           name="连接地址"
           placeholder="如 http://localhost:26393"
           id="input-bot-link-host"
@@ -24,19 +32,30 @@
           v-model="linkVerifyKey"
         />
 
-        <FormInputBox
-          name="Bot QQ"
-          placeholder="Bot 所使用的QQ"
-          type="number"
-          id="input-bot-link-qq"
-          v-model="linkQQ"
-        />
-
         <FormInputToggle
           name="启用 WebSocket"
           id="toggle-link-enable-websocket"
           v-model="linkEnableWebSocket"
         />
+
+        <el-upload
+          action=""
+          accept=".yml"
+          :limit="1"
+          :on-change="fileChange"
+          :auto-upload="false"
+          drag
+        >
+          <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+          <div class="el-upload__text">
+            将 setting.yml 拖拽至此 或 <em>点此选择</em>
+          </div>
+          <template #tip>
+            <div class="el-upload__tip">
+              选择 config/net.mamoe.mirai-api-http/setting.yml 以<strong>自动解析</strong>
+            </div>
+          </template>
+        </el-upload>
 
         <NextButton @click="setConfig()" />
       </div>
@@ -105,6 +124,7 @@ import NextButton from "../components/welcome/NextButton.vue";
 import Footer from "../components/Footer.vue";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
+import yaml from 'yaml';
 
 let configType = ref("link");
 
@@ -112,14 +132,41 @@ let loading = ref(false);
 
 let linkHost = ref("");
 let linkVerifyKey = ref("");
-let linkQQ = ref(0);
+let linkQQ = ref();
 let linkEnableWebSocket = ref(false);
 
 let baseName = ref("");
-let baseOwner = ref(0);
-let baseManageGroup = ref(0);
+let baseOwner = ref();
+let baseManageGroup = ref();
 let baseAutoAcceptFriend = ref(false);
 let baseAutoAcceptGroup = ref(false);
+
+/**
+ * 解析yml
+ */
+function fileChange(file) {
+
+  let fileReader = new FileReader();
+
+  fileReader.onload = async (e) => {
+
+    let raw = e.target.result;
+
+    let options = yaml.parse(raw);
+
+    linkHost.value = `http://${options.adapterSettings.http.host}:${options.adapterSettings.http.port}`;
+
+    if (options.adapters.includes('ws')) {
+      linkEnableWebSocket.value = true;
+    }
+
+    linkVerifyKey.value = options.verifyKey;
+
+  }
+
+  fileReader.readAsText(file.raw)
+
+}
 
 /**
  * 配置
@@ -148,7 +195,7 @@ async function setConfig() {
         owner: baseOwner.value,
         manageGroup: baseManageGroup.value,
         autoAcceptFriend: baseAutoAcceptFriend.value,
-        autoAcceptGroup: baseAutoAcceptGroup.value
+        autoAcceptGroup: baseAutoAcceptGroup.value,
       };
       targetType = "complete";
       break;
@@ -181,7 +228,6 @@ async function setConfig() {
     configType.value = targetType;
 
     if (targetType == "complete") {
-
       fetch("/api/welcome/shutdown");
 
       let reqInterval = setInterval(async () => {
@@ -190,11 +236,10 @@ async function setConfig() {
           new Promise(function (resolve, reject) {
             setTimeout(() => reject(new Error("request timeout")), 2000);
           }),
-        ])
-          .then((data) => {
-            clearInterval(reqInterval);
-            window.location = '/';
-          })
+        ]).then((data) => {
+          clearInterval(reqInterval);
+          window.location = "/";
+        });
       }, 5000);
     }
   }
