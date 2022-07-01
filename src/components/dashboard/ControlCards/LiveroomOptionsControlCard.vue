@@ -100,6 +100,7 @@ import { ElNotification } from "element-plus";
 import * as qrcode from "qrcode";
 
 const props = defineProps(["data"]);
+const emit = defineEmits(["liveroomOptionsChange"]);
 
 let mode = ref("anonymous");
 let interval = ref(60);
@@ -179,6 +180,7 @@ async function setCheckOptions() {
       type: "success",
       position: "bottom-right",
     });
+    emit("liveroomOptionsChange");
   }
 
 }
@@ -310,6 +312,7 @@ function QRLogon(data) {
     type: "success",
     position: "bottom-right",
   });
+  emit("liveroomOptionsChange");
 }
 
 /**
@@ -338,6 +341,7 @@ async function logout() {
       position: "bottom-right",
     });
     accountStatus.value = false;
+    emit("liveroomOptionsChange");
   }
 
 }

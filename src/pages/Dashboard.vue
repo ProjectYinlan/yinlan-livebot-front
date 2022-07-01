@@ -49,7 +49,7 @@
 
         <BroadcastControlCard />
 
-        <LiveroomOptionsControlCard :data="liveroomOptionsControlCardData" />
+        <LiveroomOptionsControlCard :data="liveroomOptionsControlCardData" @liveroomOptionsChange="loadBilibiliData" />
       </div>
 
       <div class="dash-content-col">
@@ -134,6 +134,18 @@ onMounted(async () => {
     await loadData();
   }, 60000);
 });
+
+async function loadBilibiliData() {
+
+  let res = await fetch("/api/dash/stats/bilibili");
+  let data = await res.json();
+
+  if (data.code) return;
+
+  bilibiliStatsCardData.value = data.data;
+
+}
+
 </script>
 
 <style></style>

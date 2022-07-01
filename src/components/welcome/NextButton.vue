@@ -1,13 +1,16 @@
 <template>
-  <a :href="href" class="next-btn">
+  <router-link :to="href" class="next-btn">
     <el-icon color="white" size="24px"><ArrowRightBold /></el-icon>
-  </a>
+  </router-link>
 </template>
 
 <script setup>
-defineProps([
-  "href"
-])
+defineProps({
+  href: {
+    default: '',
+    type: String
+  }
+})
 </script>
 
 <style></style>
