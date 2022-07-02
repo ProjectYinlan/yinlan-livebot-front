@@ -128,7 +128,7 @@ async function remove() {
   if (data.code) {
     ElNotification({
       title: "操作失败",
-      message: `${data.code}：${data.msg}`,
+      message: `${data.code}：${data.msg || data.message}`,
       type: "error",
       position: "bottom-right",
     });

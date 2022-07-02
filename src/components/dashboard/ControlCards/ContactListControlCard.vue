@@ -59,8 +59,8 @@ import { ElNotification } from "element-plus";
 import ContactListItem from "../ContactListItem.vue";
 const props = defineProps(["contactList"]);
 
-let contactListData = ref(props.contactList);
 let refreshing = ref(false);
+let contactListData = ref(props.contactList);
 
 watch(
   () => props.contactList,
@@ -93,7 +93,7 @@ async function refresh() {
   if (data.code) {
     ElNotification({
       title: "刷新失败",
-      message: `${data.code}：${data.msg}`,
+      message: `${data.code}：${data.msg || data.message}`,
       type: "error",
       position: "bottom-right",
     });

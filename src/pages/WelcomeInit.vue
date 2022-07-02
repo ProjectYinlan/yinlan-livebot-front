@@ -217,7 +217,7 @@ async function setConfig() {
 
   if (data.code) {
     ElMessage({
-      message: `设置失败 ${data.code}：${data.msg}`,
+      message: `设置失败 ${data.code}：${data.msg || data.message}`,
       type: "error",
     });
   } else {

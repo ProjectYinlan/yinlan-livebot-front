@@ -16,9 +16,10 @@
       <el-input
         class="dash-control-card-broadcast-content-item"
         v-model="content"
-        :autosize="{ minRows: 4, maxRows: 4 }"
+        :rows="4"
         type="textarea"
         placeholder="在这里输入需要广播的内容嗷"
+        resize="none"
       />
     </div>
     <div class="dash-control-card-apply">
@@ -79,7 +80,7 @@ async function broadcast() {
   if (data.code) {
     ElNotification({
       title: "操作失败",
-      message: `${data.code}：${data.msg}`,
+      message: `${data.code}：${data.msg || data.message}`,
       type: "error",
       position: "bottom-right",
     });

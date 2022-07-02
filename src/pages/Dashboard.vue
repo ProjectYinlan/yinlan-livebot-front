@@ -96,12 +96,12 @@ let contactListControlCardData = ref({});
 
 async function loadData(flag) {
 
-  let res = await fetch("https://yinlan-bot.oss-cn-beijing.aliyuncs.com/livebot/broadcast.json");
-  let data = await res.json();
+  let resp = await fetch("https://yinlan-bot.oss-cn-beijing.aliyuncs.com/livebot/broadcast.json");
+  let data = await resp.json();
   broadcastMsg.value = data.content;
 
-  res = await fetch("/api/dash");
-  data = await res.json();
+  resp = await fetch("/api/dash");
+  data = await resp.json();
 
   if (data.code) return;
   data = data.data;
@@ -137,8 +137,8 @@ onMounted(async () => {
 
 async function loadBilibiliData() {
 
-  let res = await fetch("/api/dash/stats/bilibili");
-  let data = await res.json();
+  let resp = await fetch("/api/dash/stats/bilibili");
+  let data = await resp.json();
 
   if (data.code) return;
 

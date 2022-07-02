@@ -168,7 +168,7 @@ async function setCheckOptions() {
   if (data.code) {
     ElNotification({
       title: "操作失败",
-      message: `${data.code}：${data.msg}`,
+      message: `${data.code}：${data.msg || data.message}`,
       type: "error",
       position: "bottom-right",
     });
@@ -205,13 +205,13 @@ async function getLoginQR() {
   authQRAlertText.value = "";
 
   const res = await fetch("/api/dash/control/liveroomOptions/getLoginQR");
-  let data = await res.json();
+  let data = await resp.json();
 
   if (data.code) {
     authDialogVisible.value = false;
     ElNotification({
       title: "获取失败",
-      message: `${data.code}：${data.msg}`,
+      message: `${data.code}：${data.msg || data.message}`,
       type: "error",
       position: "bottom-right",
     });
@@ -276,7 +276,7 @@ async function getLoginInfo() {
       return;
 
     default:
-      authQRAlertText.value = `${data.code}：${data.msg}`;
+      authQRAlertText.value = `${data.code}：${data.msg || data.message}`;
       authQRAlertType.value = "error";
       return;
   }
@@ -323,14 +323,14 @@ async function logout() {
   authBtnLoading.value = true;
 
   const res = await fetch("/api/dash/control/liveroomOptions/logout");
-  let data = await res.json();
+  let data = await resp.json();
 
   authBtnLoading.value = false;
 
   if (data.code) {
     ElNotification({
       title: "操作失败",
-      message: `${data.code}：${data.msg}`,
+      message: `${data.code}：${data.msg || data.message}`,
       type: "error",
       position: "bottom-right",
     });

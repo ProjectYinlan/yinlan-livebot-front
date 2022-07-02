@@ -9,8 +9,8 @@ let router = useRouter();
 let status = ref();
 
 async function loadData() {
-  let res = await fetch("/api");
-  let data = await res.json();
+  let resp = await fetch("/api");
+  let data = await resp.json();
   status.value = data.status;
 }
 

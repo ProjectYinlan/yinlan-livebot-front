@@ -43,7 +43,7 @@ switch (props.type) {
         avatarUrl = `//p.qlogo.cn/gh/${props.number}/${props.number}/640/`
         break;
 
-    case "bilibili":
+    case "liveroom":
         avatarUrl = `/api/transfer/biliAvatar?uid=${props.number}`
         break;
 

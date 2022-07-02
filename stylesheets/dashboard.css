@@ -11,6 +11,29 @@ button.is-circle.el-button.el-button--large {
   width: 40px;
 }
 
+.el-dialog {
+  --el-dialog-width: 90%;
+}
+
+@media (min-width: 768px) {
+  .el-dialog {
+    --el-dialog-width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .el-dialog {
+    --el-dialog-width: 40%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .el-dialog {
+    --el-dialog-width: 30%;
+  }
+}
+
+
 :root {
   --color-broadcast-bg: #f0f5ff;
   --color-broadcast-text: #2f54eb;
@@ -385,7 +408,8 @@ div.dash-title-settings {
   align-items: center
 }
 
-.dash-control-card-contact-item .tag {
+.dash-control-card-contact-item .tag,
+.dash-control-card-contact-item .el-switch {
   @apply mr-2;
 }
 
@@ -460,4 +484,48 @@ div.dash-title-settings {
 
 .dash-footer {
   @apply my-4 w-full text-center text-gray-400;
+}
+
+.add-liveroom-dialog {
+  @apply flex flex-col;
+  /* align-items: center; */
+}
+
+.add-liveroom-dialog-preview {
+  @apply flex;
+}
+
+.add-liveroom-dialog-preview * {
+  @apply mx-1;
+}
+
+.add-liverom-dialog-input-group {
+  @apply flex my-2 flex-wrap;
+  align-items: center;
+}
+
+.add-liverom-dialog-input-group > label {
+  @apply w-16;
+}
+
+.add-liveroom-dialog-apply-btn {
+  @apply mt-2;
+}
+
+/* 搜索候选 */
+.condidate {
+  @apply flex py-1 h-full;
+  align-items: center;
+}
+
+.condidate > * {
+  @apply flex-col mx-1;
+}
+
+.condidate > .left {
+  height: 40px;
+}
+
+.condidate .id {
+  line-height: 16px;
 }
