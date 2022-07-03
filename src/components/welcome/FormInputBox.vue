@@ -14,7 +14,7 @@
 <script setup>
 
 import { ref, watch } from "vue";
-const emit = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue']);
 const props = defineProps(["id", "name", "modelValue", "type", "placeholder"]);
 
 let inputValue = ref(props.modelValue);
@@ -32,7 +32,7 @@ function inputHandle (e) {
   if (props.type == 'number') {
     emitValue = parseInt(emitValue);
   }
-  emit('update:modelValue', emitValue);
+  emits('update:modelValue', emitValue);
 }
 
 </script>

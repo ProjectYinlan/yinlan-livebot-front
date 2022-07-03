@@ -22,7 +22,7 @@
         />
       </div>
 
-      <div class="row-center">
+      <!-- <div class="row-center">
         <div class="row-center-title">检测间隔</div>
         <el-input-number
           v-model="interval"
@@ -31,7 +31,7 @@
           size="small"
         />
         秒
-      </div>
+      </div> -->
     </div>
     <div class="dash-control-card-apply">
       <el-button type="primary" :loading="applyBtnLoading" @click="setCheckOptions()">应用</el-button>
@@ -100,7 +100,7 @@ import { ElNotification } from "element-plus";
 import * as qrcode from "qrcode";
 
 const props = defineProps(["data"]);
-const emit = defineEmits(["liveroomOptionsChange"]);
+const emits = defineEmits(["liveroomOptionsChange"]);
 
 let mode = ref("anonymous");
 let interval = ref(60);
@@ -180,7 +180,7 @@ async function setCheckOptions() {
       type: "success",
       position: "bottom-right",
     });
-    emit("liveroomOptionsChange");
+    emits("liveroomOptionsChange");
   }
 
 }
@@ -312,7 +312,7 @@ function QRLogon(data) {
     type: "success",
     position: "bottom-right",
   });
-  emit("liveroomOptionsChange");
+  emits("liveroomOptionsChange");
 }
 
 /**
@@ -341,7 +341,7 @@ async function logout() {
       position: "bottom-right",
     });
     accountStatus.value = false;
-    emit("liveroomOptionsChange");
+    emits("liveroomOptionsChange");
   }
 
 }

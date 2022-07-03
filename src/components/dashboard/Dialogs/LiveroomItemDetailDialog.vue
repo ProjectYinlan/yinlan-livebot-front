@@ -22,7 +22,7 @@ import LiveroomItemDetailItem from "../LiveroomListDetailItem.vue";
 import { ref, watch } from "vue";
 import { ElMessage, ElNotification } from "element-plus";
 
-const emit = defineEmits(["update:modelValue", "change"]);
+const emits = defineEmits(["update:modelValue", "change"]);
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -53,12 +53,11 @@ watch(
   }
 );
 watch(visibleValue, (newItem, originItem) => {
-  emit("update:modelValue", newItem);
+  emits("update:modelValue", newItem);
 });
 
 async function refresh(flag) {
-
-    if (flag) emit("change");
+  if (flag) emits("change");
 
   let url =
     props.type == "group"

@@ -105,7 +105,7 @@
 import { ref, watch } from "vue";
 import { ElMessage, ElNotification } from "element-plus";
 
-const emit = defineEmits(["update:modelValue", "bound"]);
+const emits = defineEmits(["update:modelValue", "bound"]);
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -136,7 +136,7 @@ watch(
   }
 );
 watch(visibleValue, (newItem, originItem) => {
-  emit("update:modelValue", newItem);
+  emits("update:modelValue", newItem);
 });
 
 let groupList = ref([]);
@@ -276,7 +276,7 @@ async function addNewBind() {
       type: "success",
       position: "bottom-right",
     });
-    emit("bound");
+    emits("bound");
   }
 }
 </script>

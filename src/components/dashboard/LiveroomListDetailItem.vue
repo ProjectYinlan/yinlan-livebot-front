@@ -33,7 +33,7 @@ import { ref, watch } from "vue";
 import { ElMessage } from "element-plus";
 import ContactItem from "./ContactItem.vue";
 
-const emit = defineEmits(["unbound"]);
+const emits = defineEmits(["unbound"]);
 const props = defineProps({
   name: {
     type: String,
@@ -149,7 +149,7 @@ async function unbind() {
     ElMessage.error(`${data.code}：${data.msg || data.message}`);
   } else {
     ElMessage.success(`操作成功`);
-    emit("unbound");
+    emits("unbound");
   }
 
 }

@@ -53,7 +53,7 @@ const props = defineProps({
     type: Number,
   },
 });
-const emit = defineEmits(["change"]);
+const emits = defineEmits(["change"]);
 
 let addLiveroomDialogVisible = ref(false);
 
@@ -115,12 +115,12 @@ async function remove() {
       type: "success",
       position: "bottom-right",
     });
-    emit("change");
+    emits("change");
   }
 }
 
 function change() {
-  emit("change");
+  emits("change");
 }
 </script>
 

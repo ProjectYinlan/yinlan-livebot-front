@@ -21,7 +21,7 @@
 <script setup>
 
 import { ref, watch } from "vue";
-const emit = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue']);
 const props = defineProps([
   "id",
   "name",
@@ -39,7 +39,7 @@ watch(
 
 function changeHandle (e) {
   toggleValue.value = e.target.checked;
-  emit('update:modelValue', toggleValue.value);
+  emits('update:modelValue', toggleValue.value);
 }
 
 </script>

@@ -24,7 +24,7 @@ import { ElNotification } from "element-plus";
 
 import ContactItem from "./ContactItem.vue";
 
-const emit = defineEmits(["removed"]);
+const emits = defineEmits(["removed"]);
 
 const props = defineProps({
   type: {
@@ -138,7 +138,7 @@ async function remove() {
       type: "success",
       position: "bottom-right",
     });
-    emit("removed", {
+    emits("removed", {
       id: props.id,
       type: props.type,
     });

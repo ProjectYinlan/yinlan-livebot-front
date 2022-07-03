@@ -68,7 +68,7 @@ button.is-circle.el-button.el-button--large {
 
 
 /* 背景 */
-.bg {
+.dash-bg {
   position: fixed;
   z-index: -1;
   width: 100vw;
@@ -484,6 +484,7 @@ div.dash-title-settings {
 
 .dash-footer {
   @apply my-4 w-full text-center text-gray-400;
+  z-index: 2;
 }
 
 .add-liveroom-dialog {
@@ -528,4 +529,12 @@ div.dash-title-settings {
 
 .condidate .id {
   line-height: 16px;
+}
+
+.settings-dialog {
+  @apply flex flex-col;
+}
+
+.settings-dialog-btn {
+  @apply mt-4;
 }

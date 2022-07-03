@@ -106,7 +106,7 @@
         <el-result
           icon="success"
           title="配置完毕"
-          sub-title="请手动重启整个洇岚程序，重启完毕后该页面将自动跳转"
+          sub-title="请手动重启整个洇岚程序，重启后该页面将自动跳转至登录页面"
         />
       </div>
     </FloatBox>

@@ -98,7 +98,7 @@
 import { ElNotification } from "element-plus";
 import { ref } from "vue";
 
-const emit = defineEmits(["operated"]);
+const emits = defineEmits(["operated"]);
 
 const props = defineProps({
   eventId: {
@@ -196,7 +196,7 @@ async function auditHandle(operate) {
       type: "success",
       position: "bottom-right",
     });
-    emit("operated", props.eventId);
+    emits("operated", props.eventId);
   }
 }
 </script>

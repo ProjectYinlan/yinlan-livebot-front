@@ -1,19 +1,19 @@
 <template>
   <div v-loading="loading">
-    <div class="bg"></div>
+    <div class="dash-bg"></div>
     <div class="dash-title">
       <div class="dash-title-content">洇岚 控制面板</div>
       <div class="dash-title-broadcast" v-html="broadcastMsg"></div>
       <div class="dash-title-settings">
-        <el-avatar class="dash-title-settings-avatar" shape="circle" :size="40" :src="`//q2.qlogo.cn/headimg_dl?dst_uin=${accountData.id}&spec=640`" />
+        <el-avatar class="dash-title-settings-avatar" shape="circle" :size="40" :src="`//q2.qlogo.cn/headimg_dl?dst_uin=${accountData ? accountData.id : 1}&spec=640`" />
         <el-dropdown>
           <el-button type="" size="large" circle
             ><el-icon><Setting /></el-icon
           ></el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>设置</el-dropdown-item>
-              <el-dropdown-item divided>登出</el-dropdown-item>
+              <el-dropdown-item @click="settingDialogVisible = true">设置</el-dropdown-item>
+              <el-dropdown-item @click="logout" divided>登出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -21,6 +21,7 @@
     </div>
 
     <div class="dash-content">
+      <SettingsDialog v-model="settingDialogVisible" />
       <div class="dash-content-col">
         <OverviewStatsCard
           :groupCount="overviewStatsCardData.groupCount"
@@ -64,6 +65,8 @@
 <script setup>
 import "../../stylesheets/dashboard.css";
 
+import SettingsDialog from "../components/dashboard/Dialogs/SettingsDialog.vue";
+
 import OverviewStatsCard from "../components/dashboard/StatsCards/OverviewStatsCard.vue";
 import BilibiliStatsCard from "../components/dashboard/StatsCards/BilibiliStatsCard.vue";
 import YinlanStatsCard from "../components/dashboard/StatsCards/YinlanStatsCard.vue";
@@ -77,11 +80,17 @@ import ContactListControlCard from "../components/dashboard/ControlCards/Contact
 import Footer from "../components/Footer.vue";
 
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+
+const router = useRouter();
 
 let loading = ref(true);
 
 let broadcastMsg = ref("未能从公告板获取数据，不过这并不影响使用");
 let accountData = ref({});
+
+let settingDialogVisible = ref(false);
 
 let overviewStatsCardData = ref({});
 let bilibiliStatsCardData = ref({});
@@ -103,7 +112,13 @@ async function loadData(flag) {
   resp = await fetch("/api/dash");
   data = await resp.json();
 
-  if (data.code) return;
+  loading.value = false;
+
+  if (data.code) {
+    ElMessage.error("无权访问或未登录，正在跳转……");
+    router.push('/');
+    return;
+  };
   data = data.data;
 
   accountData.value = data.account;
@@ -125,7 +140,6 @@ async function loadData(flag) {
     }, 1000);
   }
 
-  loading.value = false;
 }
 
 onMounted(async () => {
@@ -144,6 +158,20 @@ async function loadBilibiliData() {
 
   bilibiliStatsCardData.value = data.data;
 
+}
+
+async function logout () {
+
+  let resp = await fetch("/api/auth/logout");
+  let data = await resp.json();
+
+  if (data.code) {
+    ElMessage.error(`登出失败：${data.code}-${data.msg}`);
+    return;
+  }
+
+  ElMessage.success("已成功登出~");
+  router.push('/');
 }
 
 </script>
