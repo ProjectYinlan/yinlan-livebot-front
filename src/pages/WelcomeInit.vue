@@ -52,7 +52,9 @@
           </div>
           <template #tip>
             <div class="el-upload__tip">
-              选择 config/net.mamoe.mirai-api-http/setting.yml 以<strong>自动解析</strong>
+              选择 config/net.mamoe.mirai-api-http/setting.yml 以<strong
+                >自动解析</strong
+              >
             </div>
           </template>
         </el-upload>
@@ -124,7 +126,7 @@ import NextButton from "../components/welcome/NextButton.vue";
 import Footer from "../components/Footer.vue";
 import { ref } from "vue";
 import { ElMessage } from "element-plus";
-import yaml from 'yaml';
+import yaml from "yaml";
 
 let configType = ref("link");
 
@@ -145,27 +147,25 @@ let baseAutoAcceptGroup = ref(false);
  * 解析yml
  */
 function fileChange(file) {
-
   let fileReader = new FileReader();
 
   fileReader.onload = async (e) => {
-
     let raw = e.target.result;
 
     let options = yaml.parse(raw);
 
-    linkHost.value = `http://${options.adapterSettings.http.host}:${options.adapterSettings.http.port}`;
+    linkHost.value = options.adapterSettings.http
+      ? `http://${options.adapterSettings.http.host}:${options.adapterSettings.http.port}`
+      : `http://localhost:8080`;
 
-    if (options.adapters.includes('ws')) {
+    if (options.adapters.includes("ws")) {
       linkEnableWebSocket.value = true;
     }
 
     linkVerifyKey.value = options.verifyKey;
+  };
 
-  }
-
-  fileReader.readAsText(file.raw)
-
+  fileReader.readAsText(file.raw);
 }
 
 /**
