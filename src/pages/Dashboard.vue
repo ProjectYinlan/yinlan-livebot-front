@@ -5,14 +5,23 @@
       <div class="dash-title-content">洇岚 控制面板</div>
       <div class="dash-title-broadcast" v-html="broadcastMsg"></div>
       <div class="dash-title-settings">
-        <el-avatar class="dash-title-settings-avatar" shape="circle" :size="40" :src="`//q2.qlogo.cn/headimg_dl?dst_uin=${accountData ? accountData.id : 1}&spec=640`" />
+        <el-avatar
+          class="dash-title-settings-avatar"
+          shape="circle"
+          :size="40"
+          :src="`//q2.qlogo.cn/headimg_dl?dst_uin=${
+            accountData ? accountData.id : 1
+          }&spec=640`"
+        />
         <el-dropdown>
           <el-button type="" size="large" circle
             ><el-icon><Setting /></el-icon
           ></el-button>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="settingDialogVisible = true">设置</el-dropdown-item>
+              <el-dropdown-item @click="settingDialogVisible = true"
+                >设置</el-dropdown-item
+              >
               <el-dropdown-item @click="logout" divided>登出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -44,13 +53,16 @@
       <div class="dash-content-col">
         <YinlanStatsCard
           :version="yinlanStatsCardData.version"
-          :updateDate="yinlanStatsCardData.updateDate"
+          :publish="yinlanStatsCardData.publish"
           :runningTime="yinlanRunningTime"
         />
 
         <BroadcastControlCard />
 
-        <LiveroomOptionsControlCard :data="liveroomOptionsControlCardData" @liveroomOptionsChange="loadBilibiliData" />
+        <LiveroomOptionsControlCard
+          :data="liveroomOptionsControlCardData"
+          @liveroomOptionsChange="loadBilibiliData"
+        />
       </div>
 
       <div class="dash-content-col">
@@ -81,7 +93,7 @@ import Footer from "../components/Footer.vue";
 
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElNotification } from "element-plus";
 
 const router = useRouter();
 
@@ -104,8 +116,9 @@ let liveroomOptionsControlCardData = ref({});
 let contactListControlCardData = ref({});
 
 async function loadData(flag) {
-
-  let resp = await fetch("https://yinlan-bot.oss-cn-beijing.aliyuncs.com/livebot/broadcast.json");
+  let resp = await fetch(
+    "https://yinlan-bot.oss-cn-beijing.aliyuncs.com/livebot/broadcast.json"
+  );
   let data = await resp.json();
   broadcastMsg.value = data.content;
 
@@ -116,9 +129,9 @@ async function loadData(flag) {
 
   if (data.code) {
     ElMessage.error("无权访问或未登录，正在跳转……");
-    router.push('/');
+    router.push("/");
     return;
-  };
+  }
   data = data.data;
 
   accountData.value = data.account;
@@ -135,11 +148,20 @@ async function loadData(flag) {
   contactListControlCardData.value = data.cards.contactList;
 
   if (flag) {
+    if (data.stats.yinlan.version != data.currentVersion.version) {
+      ElNotification({
+        title: `有新版本嗷，点此了解详情`,
+        message: `${data.currentVersion.version} - ${data.currentVersion.publish}：${data.currentVersion.log}`,
+        type: "info",
+        duration: 0,
+        position: "bottom-right",
+      });
+    }
+
     setInterval(() => {
       yinlanRunningTime.value++;
     }, 1000);
   }
-
 }
 
 onMounted(async () => {
@@ -150,18 +172,15 @@ onMounted(async () => {
 });
 
 async function loadBilibiliData() {
-
   let resp = await fetch("/api/dash/stats/bilibili");
   let data = await resp.json();
 
   if (data.code) return;
 
   bilibiliStatsCardData.value = data.data;
-
 }
 
-async function logout () {
-
+async function logout() {
   let resp = await fetch("/api/auth/logout");
   let data = await resp.json();
 
@@ -171,9 +190,8 @@ async function logout () {
   }
 
   ElMessage.success("已成功登出~");
-  router.push('/');
+  router.push("/");
 }
-
 </script>
 
 <style></style>

@@ -4,7 +4,7 @@
       <el-icon><Setting /></el-icon>
     </StatsCardContent>
 
-    <StatsCardContent name="发布日期" :value="updateDate">
+    <StatsCardContent name="发布日期" :value="publish">
       <el-icon><Calendar /></el-icon>
     </StatsCardContent>
 
@@ -23,8 +23,8 @@ const props = defineProps({
     default: '0.0.0',
     type: String
   },
-  updateDate: {
-    default: '2022.8.1',
+  publish: {
+    default: '2021.5.1',
     type: String
   },
   runningTime: {
@@ -32,9 +32,6 @@ const props = defineProps({
     type: Number
   }
 });
-// const props = defineProps(["data"]);
-// let { version, updateDate, runningTime } = props.data;
-
 let runningTimeString = ref(getTimeStr(props.runningTime));
 
 watch(

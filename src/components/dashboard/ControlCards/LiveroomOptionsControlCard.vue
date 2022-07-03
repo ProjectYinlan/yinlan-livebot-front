@@ -323,7 +323,7 @@ async function logout() {
 
   authBtnLoading.value = true;
 
-  const res = await fetch("/api/dash/control/liveroomOptions/logout");
+  const resp = await fetch("/api/dash/control/liveroomOptions/logout");
   let data = await resp.json();
 
   authBtnLoading.value = false;
