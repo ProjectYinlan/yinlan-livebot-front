@@ -22,16 +22,17 @@
         />
       </div>
 
-      <!-- <div class="row-center">
+      <div class="row-center">
         <div class="row-center-title">检测间隔</div>
         <el-input-number
           v-model="interval"
-          :min="mode ? 10 : 60"
-          :max="90"
+          :min="mode == 'anonymous' ? 60 : 10"
+          :max="60"
+          :disabled="mode == 'anonymous'"
           size="small"
         />
         秒
-      </div> -->
+      </div>
     </div>
     <div class="dash-control-card-apply">
       <el-button type="primary" :loading="applyBtnLoading" @click="setCheckOptions()">应用</el-button>
@@ -204,7 +205,7 @@ async function getLoginQR() {
   authQRLoading.value = true;
   authQRAlertText.value = "";
 
-  const res = await fetch("/api/dash/control/liveroomOptions/getLoginQR");
+  const resp = await fetch("/api/dash/control/liveroomOptions/getLoginQR");
   let data = await resp.json();
 
   if (data.code) {

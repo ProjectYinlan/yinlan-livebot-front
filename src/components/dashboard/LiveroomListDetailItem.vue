@@ -73,7 +73,7 @@ async function setAtAll() {
       data = {
         uid: props.id,
         groupId: props.parentId,
-        atAll: atAllValue.value,
+        atAll: !atAllValue.value,
       };
       break;
 
@@ -81,7 +81,7 @@ async function setAtAll() {
       data = {
         uid: props.parentId,
         groupId: props.id,
-        atAll: atAllValue.value,
+        atAll: !atAllValue.value,
       };
       break;
 
